@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 🅼🅾🆅🅸🅴🆂  🅵🆁🅴🅴</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <style>
+        /* Loading Screen Styles */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .logo-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        .loading-butter {
+            width: 100%;
+            height: 100%;
+           background: url('butter.png') no-repeat center;
+            background-size: contain;
+            animation: spin 1.5s linear infinite, bounce 1s ease-in-out infinite alternate, pulse 1.2s ease-in-out infinite;
+        }
+
+      @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+      @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+
+      @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+       /* Custom Cursor Styles */
+        body {
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            background-color: black;
+            text-align: center;
+            overflow-x: hidden;
+            background-image: linear-gradient(45deg, #1a1a1a, #000000);
+            animation: gradient-animation 10s linear infinite;
+             cursor: none;
+        }
+        @keyframes gradient-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+       .custom-cursor {
+            position: absolute;
+            width: 95px;
+            height: 95px;
+            background: url('butter.png') no-repeat center;
+            background-size: contain;
+            pointer-events: none;
+        }
+
+        /* Background video styling */
+        .background-video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .background-video-container video {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            opacity: 0.7;
+        }
+
+        header {
+             padding: 50px 20px;
+            position: relative;
+            color: white;
+            text-shadow: 0 0 15px red;
+            animation: glow 1.5s infinite alternate, pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px red, 0 0 20px red; }
+            100% { text-shadow: 0 0 20px red, 0 0 30px red; }
+        }
+
+        header h1 {
+            font-size: 3.5em;
+            animation: fadeInDown 2s ease-in-out;
+        }
+
+        nav {
+            margin: 20px 0;
+            opacity: 0;
+            animation: slideIn 1.5s forwards 0.5s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            letter-spacing: 2px;
+            padding: 10px;
+            border: 2px solid red;
+            border-radius: 10px;
+            transition: 0.3s;
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+            animation: button-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes button-pulse {
+            0% { box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(255, 0, 0, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+        }
+
+        nav a:hover {
+            background-color: red;
+            color: black;
+            box-shadow: 0 0 10px red, 0 0 20px red;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 30px;
+            perspective: 800px;
+        }
+
+        .movie-card {
+            margin: 15px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .movie-card img {
+            width: 200px;
+            height: auto;
+            border-radius: 15px;
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+
+        .movie-card img:hover {
+             transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.8);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            background-color: #222;
+            color: white;
+            padding: 15px 0;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeInUp 1.5s forwards 2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content horizontally */
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Floating hearts effect */
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            color: red;
+            animation: heart-animation 1.5s ease-in-out forwards;
+        }
+
+        @keyframes heart-animation {
+            0% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkles Animation */
+        .sparkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .spark {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle 2s infinite linear;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+
+        .movie-card h2 {
+            margin-top: 5px;
+            font-size: 1.2em;
+            color: white;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .movie-card:hover h2 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Anime character styling */
+      .anime-character {
+          position: fixed;
+          bottom: 20px;
+          left: 20px;
+          width: 100px;
+          height: 110px; /*Adjust this based on your sprite*/
+          background-image: url('https://i.ibb.co/9gQj88k/oggy-walk.png'); /* Path to walking sprite sheet */
+          background-repeat: no-repeat;
+          background-size: 800% auto;  /* Adjust based on number of sprite columns*/
+          z-index: 3;
+           pointer-events: none;
+          animation: sprite-animation 0.8s steps(8) infinite, character-glow 1.5s infinite alternate;
+           transition: all 0.5s ease;
+      }
+        @keyframes sprite-animation {
+          to { background-position: -800% 0; } /* Adjust this to the size of sprite sheet*/
+        }
+
+       @keyframes character-glow {
+        0% {  filter: drop-shadow(0 0 5px red); }
+        100% {filter: drop-shadow(0 0 15px red);  }
+        }
+
+
+         /* Welcome Message and Paper Styling */
+        .welcome-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 4; /* Ensure its above other content */
+        }
+
+        .welcome-paper {
+            width: 60%; /* Adjust as needed */
+            padding: 30px;
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            position: relative;
+             opacity: 0;
+            transform: scale(0);
+            animation: paper-animation 1s forwards;
+        }
+        @keyframes paper-animation {
+           to {
+            transform: scale(1);
+            opacity: 1;
+           }
+        }
+
+
+        .welcome-message {
+             font-size: 2.5em;
+             font-weight: bold;
+             color: rgb(253, 115, 2);
+             white-space: nowrap;
+             opacity: 0;
+            text-shadow: 0 0 2px rgba(170, 21, 211, 0.8);
+              animation: text-animation 1s forwards 0.6s,  text-glow 1.5s infinite alternate;
+        }
+
+       @keyframes text-glow {
+           0% {text-shadow: 0 0 5px rgb(161, 138, 162); }
+           100% { text-shadow: 0 0 15px rgb(155, 5, 225);}
+       }
+
+
+         @keyframes text-animation {
+           to {
+            opacity: 1;
+           }
+        }
+
+    .footer-info{
+          margin: 0.3em;
+      }
+
+        .footer-info a {
+            color: #00bcd4; /* Link color */
+            text-decoration: none;
+        }
+
+        .footer-info a:hover {
+          text-decoration: underline; /* Underline on hover */
+        }
+     /* Call-to-Action Buttons in Movie-Card */
+        .movie-card a {
+            display: inline-block;
+             margin-top: 15px; /* Space it from text/image */
+            padding: 10px 20px; /* Increase padding */
+             background-color: red;
+            color: black;
+            font-size: 1.1em;
+            text-decoration: none;
+            border-radius: 10px;
+             border: 2px solid red; /* Added border */
+           transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+    .movie-card a:hover {
+          transform: scale(1.05);
+           box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+    }
+   /* Social Proof */
+        .social-proof {
+            margin-top: 30px;
+            padding: 20px;
+           border-radius: 10px;
+           background-color: #222;
+          opacity: 0;
+            animation: fadeInUp 1.5s forwards 2s;
+
+         }
+
+     .social-proof h2{
+         color: white;
+         font-size: 1.5em;
+     }
+
+       .testimonial {
+             border-radius: 10px;
+             padding: 10px 15px;
+          margin: 10px;
+           background-color: #444; /* Slightly lighter shade of the footer */
+          color: #eee;
+       }
+
+
+       .social-buttons {
+           margin-top: 20px;
+        display: flex;
+         justify-content: center;
+
+       }
+       .social-buttons a{
+        display: inline-block;
+           margin: 0 10px;
+            padding: 8px 16px;
+           background-color: #00bcd4;
+           border-radius: 5px;
+          color: black;
+         text-decoration: none;
+         transition: transform 0.3s, box-shadow 0.3s;
+       }
+
+       .social-buttons a:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 5px rgba(0,188,212, 0.8);
+        }
+
+    /* Gamification*/
+    .badges {
+        margin-top: 20px;
+       display: flex;
+       justify-content: center;
+
+        }
+
+     .badges img {
+         width: 50px;
+        height: 50px;
+        margin: 0 10px;
+        opacity:0;
+          animation: fadeInUp 1.5s forwards 2.5s;
+    }
+
+       /* Add audio control styles if necessary*/
+
+ /* Snow Effect */
+        .snow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+             z-index: 2;
+        }
+
+        .snow-drop {
+             position: absolute;
+             width: 2px; /* increased width */
+             height: 2px; /* increased height */
+             background-color: white;
+             border-radius: 50%;
+             opacity: 0;
+             animation: snowfall 4s linear infinite;  /*  reduced speed */
+        }
+
+        @keyframes snowfall {
+        to {
+           transform: translateY(100vh);
+           opacity: 1;
+         }
+        }
+        /* Sprinkles Effect */
+        .sprinkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5; /* Ensure it's above other elements */
+        }
+
+        .sprinkle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #f1c40f; /*Default Yellow for better readability */
+           opacity: 0.5;
+            transform: scale(1);
+           pointer-events: none;
+            animation: sprinkle-animation 1.0s ease-out forwards; /* Add animation */
+           border-radius: 30%
+        }
+
+        @keyframes sprinkle-animation {
+           0% {
+             opacity: 0.5;
+            transform: scale(1) translateY(0) translateX(0) rotate(0deg);
+           }
+           100% {
+            opacity: 0;
+             transform: scale(1.6) translateY(-50px) translateX(40px) rotate(180deg);  /* More spread */
+           }
+      }
+
+    .fall-animation-container {
+            opacity: 0;
+            transform: translateY(-50px); /* Move all elements up initially */
+             transition: all 1.2s ease;
+        }
+     .custom-cursor {
+            position: absolute;
+             width: 95px;
+             height: 95px;
+            background: url('butter.png') no-repeat center;
+            background-size: contain;
+            pointer-events: none;
+        }
+     /* Loading Screen Styles */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Make sure it's on top */
+        }
+
+         .loading-butter {
+             width: 100%;
+            height: 100%;
+            background: url('butter.png') no-repeat center;
+             background-size: contain;
+             animation: loading-animation 2s ease-in-out infinite,  loading-spin 2s linear infinite;
+         }
+
+         @keyframes loading-animation {
+           0% { transform: scale(0.5) rotate(0deg); filter: hue-rotate(0deg); }
+           50% { transform: scale(1.2) rotate(180deg); filter: hue-rotate(180deg); }
+           100% { transform: scale(0.5) rotate(360deg); filter: hue-rotate(360deg); }
+         }
+
+        @keyframes loading-spin {
+          from { transform: rotate(0deg); }
+          to {transform: rotate(360deg); }
+        }
+     .bouncing-butter {
+         position: absolute;
+         width: 90px;
+       height: 90px;
+         background: url('butter.png') no-repeat center;
+          background-size: contain;
+        }
+
+    </style>
+</head>
+<body class="fall-animation-container">
+     <div id="loading-screen">
+       <div class="loading-butter"></div>
+     </div>
+
+      <div class="welcome-container">
+         <div class="welcome-paper">
+               <div class="welcome-message">free movie websites❤️!</div>
+         </div>
+      </div>
+
+    <!-- Background video -->
+    <div class="background-video-container">
+        <video autoplay muted loop>
+            <source src="stars.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <header>
+        <h1>𝑨𝒍𝒍 𝑴𝒐𝒗𝒊𝒆𝒔 𝑶𝒏𝒍𝒊𝒏𝒆 𝑭𝒓𝒆𝒆</h1>
+        <h2>Click any website you want</h2>
+        <nav>
+            <a href="https://www.5movierulz.vu/">Movierulz</a>
+            <a href="https://www.moviezwap.fyi/">Moviezwap</a>
+            <a href="https://ibommaai.com/telugu-movies/">Bappam</a>
+            <a href="https://iosmirror.cc/home">Netflix</a>
+        </nav>
+    </header>
+
+    <section class="container">
+        <a href="https://www.5movierulz.vu/" target="_blank" class="movie-card">
+            <img src="movierulz.png" alt="Movierulz">
+            <h2>Movierulz</h2>
+              <a href="https://www.5movierulz.vu/" target="_blank"> </a>
+        </a>
+
+        <a href="https://www.moviezwap.fyi/" target="_blank" class="movie-card">
+            <img src="movizwap.png" alt="Moviezwap">
+            <h2>Moviezwap</h2>
+             <a href="https://www.moviezwap.fyi/" target="_blank"></a>
+        </a>
+
+        <a href="https://ibommaai.com/telugu-movies/" target="_blank" class="movie-card">
+            <img src="bappam.png" alt="Bappam">
+            <h2>Bappam</h2>
+             <a href="https://ibommaai.com/telugu-movies/" target="_blank"></a>
+        </a>
+
+        <a href="https://iosmirror.cc/home" target="_blank" class="movie-card">
+            <img src="netflix.png" alt="Netflix">
+            <h2>Netflix</h2>
+              <a href="https://iosmirror.cc/home" target="_blank"></a>
+        </a>
+    </section>
+
+     <div class="social-proof">
+         <h2>hello movie lovers😎!</h2>
+         <div class="testimonial">
+           "basically iam also a movie lover😎!"
+           <p>- by vivek</p>
+           </div>
+       <div class="testimonial">
+           "iam so excited to create this websites❤️ "
+           <p>-Aditya university</p>
+       </div>
+        <div class="social-buttons">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://yourwebsite.com" onclick="shareOnFacebook(); return false;">Share on Facebook</a>
+           <a href="https://api.whatsapp.com/send?text=Check this out: https://yourwebsite.com" onclick="shareOnWhatsapp(); return false;">Share on whatsapp</a>
+             <a href="https://www.instagram.com/" onclick="shareOnInstagram(); return false;">Share on Instagram</a>
+      </div>
+     </div>
+
+     
+
+    <footer>
+        <div class="footer-info">
+        <p>© 2025 Free Movies Online. All Rights Reserved.</p>
+           <p>Developed by: T. Vivek</p>
+         <p>  <a href="https://www.instagram.com/unique_designs_templetes_reels?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">Instagram</a></p>
+          <p>Institute: Aditya University</p>
+            <p>Follow for more hacks!</p>
+           </div>
+    </footer>
+
+    <div class="sparkles"></div>
+    <div class="anime-character"></div> <!-- Anime character container -->
+    <!-- audio control here if necessary-->
+   
+    <div class="snow"></div>
+     <div class="sprinkles"></div>
+     <div class="custom-cursor" id="cursor"></div>
+    <div id="bouncingButterContainer"></div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+    <script>
+      const cursor = document.getElementById('cursor');
+      const loadingScreen = document.getElementById('loading-screen');
+
+       const bouncingButterContainer = document.getElementById('bouncingButterContainer');
+       const balls = [];
+       const numBalls = 5;
+      for (let i = 0; i < numBalls; i++) {
+          const ball = document.createElement('div');
+            ball.classList.add('bouncing-butter');
+           ball.style.left = `${Math.random() * window.innerWidth}px`; // Random horizontal position
+             ball.style.top = `${Math.random() * window.innerHeight}px`;  // Random vertical position
+            bouncingButterContainer.appendChild(ball);
+           balls.push({
+                element: ball,
+                x: parseFloat(ball.style.left),
+                y: parseFloat(ball.style.top),
+                 xSpeed: (Math.random() - 0.5) * 4,
+                 ySpeed: (Math.random() - 0.5) * 4
+           });
+       }
+
+       const bounceDamping = 0.8;
+       function updateBallsPosition() {
+            for (const ball of balls) {
+              ball.x += ball.xSpeed;
+               ball.y += ball.ySpeed;
+            const windowWidth = window.innerWidth;
+           const windowHeight = window.innerHeight;
+
+            // Bounce off horizontal edges
+            if (ball.x + ball.element.offsetWidth > windowWidth || ball.x < 0) {
+                ball.xSpeed = -ball.xSpeed * bounceDamping;
+            }
+
+            // Bounce off vertical edges
+            if (ball.y + ball.element.offsetHeight > windowHeight || ball.y < 0) {
+                ball.ySpeed = -ball.ySpeed * bounceDamping;
+            }
+
+           ball.element.style.left = `${ball.x}px`;
+             ball.element.style.top = `${ball.y}px`;
+
+            }
+           requestAnimationFrame(updateBallsPosition);
+       }
+
+     requestAnimationFrame(updateBallsPosition);
+
+
+        document.addEventListener('mousemove', (e) => {
+        cursor.style.left = `${e.pageX}px`;
+        cursor.style.top = `${e.pageY}px`;
+     });
+        // Animate the welcome message
+       setTimeout(() => {
+         document.querySelector(".welcome-container").style.display ="none";
+       }, 3000);
+
+       window.onload = () => {
+         setTimeout(() => {
+           loadingScreen.style.display="none";
+             document.querySelector('body').classList.remove('fall-animation-container');
+        }, 2500);
+       };
+
+         function createSnowDrop() {
+           const snowDrop = document.createElement('div');
+            snowDrop.classList.add('snow-drop');
+             snowDrop.style.left = `${Math.random() * 100}%`;
+             snowDrop.style.animationDelay = `${Math.random() * 2}s`;
+            snowDrop.style.animationDuration = `${Math.random() * 3 + 2}s`; // Randomize speed
+           snowDrop.style.width = `${Math.random() * 1 + 2}px`; // Randomize width
+           snowDrop.style.height =  `${Math.random() * 1 + 2}px`; // Randomize height
+          document.querySelector('.snow').appendChild(snowDrop);
+
+            setTimeout(() => {
+                snowDrop.remove();
+            }, 5000)
+        }
+   
+      function startSnow() {
+             setInterval(() => {
+                for(let i=0; i < 5; i++)
+             createSnowDrop();
+          }, 150);
+     }
+     startSnow();
+
+
+         function createHeart(event) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = `${event.pageX - 20}px`;
+            heart.style.top = `${event.pageY - 20}px`;
+            document.body.appendChild(heart);
+
+            // Remove the heart after animation ends
+            setTimeout(() => {
+                heart.remove();
+            }, 1500);
+        }
+
+        // Event listener for mouse clicks
+        document.addEventListener('click', createHeart);
+
+
+    function createSparkle() {
+        const spark = document.createElement('div');
+        spark.classList.add('spark');
+        spark.style.left = `${Math.random() * 100}%`;
+        spark.style.top = `${Math.random() * 100}%`;
+        spark.style.animationDelay = `${Math.random() * 2}s`;
+        document.querySelector('.sparkles').appendChild(spark);
+
+        setTimeout(() => {
+            spark.remove();
+        }, 2000); // Match animation duration
+    }
+
+    function addSparkles() {
+      setInterval(() => {
+        for (let i = 0; i < 3; i++)
+        createSparkle();
+        }, 300); // create a new sparkle every .3 second
+    }
+    addSparkles();
+
+        const character = document.querySelector('.anime-character');
+        document.addEventListener('mousemove', (event) => {
+          const mouseX = event.clientX;
+          const mouseY = event.clientY;
+
+          // Calculate character position
+           const charX = mouseX - (character.offsetWidth / 2) ;
+           const charY = mouseY - (character.offsetHeight / 2) - 50 ;
+
+           character.style.transform = `translate(${charX}px, ${charY}px)`;
+       });
+      
+        // Cursor-Following Sprinkles
+        const sprinkleContainer = document.querySelector('.sprinkles');
+       const colors = ['#e74c3c', '#3498db', '#2ecc71', '#f1c40f', '#9b59b6', '#1abc9c', '#e67e22'];
+         document.addEventListener('mousemove', (event) => {
+         for(let i=0; i< 4; i++){
+                createSprinkle(event);
+            }
+        });
+
+       function createSprinkle(event) {
+            const sprinkle = document.createElement('div');
+            sprinkle.classList.add('sprinkle');
+           sprinkle.style.left = `${event.pageX - 20 + (Math.random() * 30 -15)}px`;
+           sprinkle.style.top = `${event.pageY - 20 + (Math.random() * 30 -15)}px`;
+          sprinkle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+           sprinkleContainer.appendChild(sprinkle);
+
+           setTimeout(() => {
+               sprinkle.remove();
+         }, 1000)
+      }
+      function shareOnFacebook() {
+          window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank');
+        }
+
+
+      function shareOnTwitter() {
+            window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.href), '_blank');
+        }
+
+
+      function shareOnInstagram() {
+          window.open('https://www.instagram.com/?url=' + encodeURIComponent(window.location.href), '_blank');
+        }
+    </script>
+     <div  style="display:flex; justify-content:center; align-items: center">
+        <div  style="position:fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 300px;
+        height: 300px;" id="lottie-animation-2"></div>  
+    </div>
+</body>
+</html>
